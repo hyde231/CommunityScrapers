@@ -1,0 +1,44 @@
+name: "Kellymadisonmedia"
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - https://www.teenfidelity.com/
+      - https://www.pornfidelity.com/
+      
+    scraper: sceneScraper
+xPathScrapers:
+  sceneScraper:
+    scene:
+      Title:
+        selector: //h4[@class="card-title mb-0"]/text()
+        replace:
+          - regex: .Trailer..
+            with: ''
+      Details: 
+        selector: //p[@class="card-text"]/text()
+      Performers:
+        Name:
+          selector: //h4[@class="card episode-summary mb-4"]//a/text()
+          replace:
+            - regex: \t+
+              with:
+          split: ','
+      Date:
+        selector: //h4[@class="card episode-summary mb-4"]//h4[2]/text()
+        replace:
+          - regex: .Published..
+            with: ''
+        parseDate: 2006-01-02
+      Image:
+        selector: //div[@class="vjs-poster"]/@style
+        replace:
+          - regex: ^.*url.([^\)]+).*$
+            with: "$1"
+#      Studio:
+#        Name:
+#          selector: //div[@class="flex-shrink-0 flex items-center"]//img[1]/@alt
+#          replace:
+#            - regex: \.\w+
+#              with:
+
+# Last Updated June 21, 2020
