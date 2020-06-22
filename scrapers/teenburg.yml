@@ -1,0 +1,30 @@
+name: "Teenburg"
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - http://new.teenburg.com/videos/
+    scraper: sceneScraper
+xPathScrapers:
+  sceneScraper:
+    scene:
+      Title: //head/title/text()
+      Details: 
+        selector: //div[@class="video_info"]//p[@class="description"]/text()
+# FIXME Performer doesn't work
+      Performers:
+        Name: 
+          selector: //div[@class="video_info"]//a/@title
+#          selector: //div[@class="video_info"]//p[1]/text()
+#          replace:
+#            - regex: Models.
+#              with: ""
+#          split: ","
+      Image:
+        selector: //div[@class="video_player"]//script/text()
+        replace:
+          - regex: ^.*preview_url=([^\&]+).*$
+            with: "$1"
+      Tags:
+        Name:
+          selector: //div[@class="video_info"]//p[4]/text()
+          split: ','
